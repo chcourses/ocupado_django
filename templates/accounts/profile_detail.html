@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+          <div class="row">
+            <!-- Previa del avatar -->
+            <div class="col-md-2">
+              {% if usuario.profile.avatar %}
+              <img src="{{request.user.profile.avatar.url}}" class="img-fluid">
+              <p class="mt-1">Apagar? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
+              {% else %}
+              <img src="{% static 'img/no-avatar.jpg' %}" class="img-fluid">
+              {% endif %}
+            </div>
+            <!-- Formulario -->
+            <div class="col-md-10">
+              <h3>Perfil de <b>{{ usuario.first_name }} {{ usuario.last_name }}</b></h3>
+              <label for="email">E-mail:</label>
+              <input class="form-control" name="email" type="text" value="{{ usuario.email }}" disabled>
+              <label for="bio">Bio:</label>
+              <textarea class="form-control" name="bio" type="text" disabled>{{ usuario.profile.bio }}</textarea>
+              <label for="link">Site:</label>
+              <input class="form-control" name="link" type="text" value="{{ usuario.profile.link }}" disabled>
+              <a class="btn btn-secondary btn-block mt-3" href="{% url 'profiles' %}">Voltar</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

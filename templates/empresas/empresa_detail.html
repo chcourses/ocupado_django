@@ -1,0 +1,30 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ object.nome }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="d-inline">Detalhes da empessionária</h2>
+    <a href="{% url 'emp-list' %}" class="btn btn-secondary btn-sm float-right align-text-bottom">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar</a>
+    <div class="line"></div>
+    <div class="content-section">
+        <div class="text-center">
+            {% if object.logo %}
+            <img class="rounded-circle" style="max-width: 50px;max-height: 50px;" src="{{ object.logo.url }}">
+
+            {% endif %}
+
+            <div class="media-body">
+                <h2 class="text-center">{{ object.nome }}</h2>
+                <p class="text-secondary">{{ object.razao_social }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

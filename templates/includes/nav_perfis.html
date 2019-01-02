@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/profiles">Perfis</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/profiles">Inicial</a>
+      </li>
+    </ul>
+    <form class="form-inline" method="GET" onsubmit="event.preventDefault();" id="form">
+      <select class="form-control form-control-sm mr-5" id="empresaSel">
+        <option value="">Todas as empresas</option>
+        {% for empresa in empresas %}
+        {% if not selEmpresa == empresa %}
+        <option value="{{ empresa }}">{{ empresa }}</option>
+        {% endif %}
+        {% endfor %}
+
+      </select>
+      <input class="form-control form-control-sm mr-1" type="text" name="name" id="name" placeholder="Buscar perfil.."
+        aria-label="Search" value="{{ name }}">
+      <input type="hidden" name="empresa">
+      <button class="btn btn-outline-secondary btn-sm" type="submit">Buscar</button>
+    </form>
+  </div>
+</nav>
+
+{% block js %}
+<script>
+  var empresaSel = document.getElementById('empresaSel');
+  var path = window.location.pathname;
+  var form = document.getElementById('form');
+  form.addEventListener('submit', function (e) {
+    var nome = document.getElementById('name').value;
+    e.preventDefault();
+    window.location.replace(path + '?name=' + nome + '&empresa=' + empresaSel.value)
+  }, true);
+</script>
+{% endblock js %}

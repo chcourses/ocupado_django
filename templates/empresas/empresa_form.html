@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-3 p-3">
+    <h2 class="d-inline">Cadastro de empresa</h2>
+    <a href="{% url 'emp-list' %}" class="btn btn-secondary btn-sm float-right align-text-bottom">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        Voltar</a>
+    <div class="line"></div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button name="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+{% endblock content %}

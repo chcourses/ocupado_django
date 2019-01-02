@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block title %}Ocupado - Home{% endblock title %}
+{% block content %}
+
+
+{% include 'includes/nav_empresas.html' %}
+<div class="container">
+    <div class="row mt-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Lote</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Etapa</th>
+                    {% if user.is_superuser %}
+                    <th scope="col" colspan="3" class="text-center"></th>
+                    {% else %}
+                    <th scope="col" colspan="2" class="text-center"></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for empresa in empresas %}
+                <tr>
+                    <td>{{ empresa.lote }}</td>
+                    <td>{{ empresa.nome }}</td>
+                    <td>{{ empresa.etapa }}</td>
+                    <td><a href="{% url 'emp-detail' empresa.pk %}" class="btn btn-primary btn-sm">Detalhes</a></td>
+                    <td><a href="{% url 'emp-update' empresa.pk %}" class="btn btn-secondary btn-sm">Editar</a></td>
+                    {% if user.is_superuser %}
+                    <td><a href="{% url 'emp-delete' empresa.pk %}" class="btn btn-danger btn-sm">Excluir</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-3 justify-content-center">
+        {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#"><span>&laquo;</span></a></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#"><span>&raquo;</span></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+
+</div>
+</div>
+
+
+{% endblock %}
